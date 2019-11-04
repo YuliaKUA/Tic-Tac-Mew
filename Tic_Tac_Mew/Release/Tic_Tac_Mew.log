@@ -1,0 +1,15 @@
+﻿  Game.cpp
+e:\tic_tac_mew\tic_tac_mew\tictactoegame.h(229): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\tic_tac_mew\tic_tac_mew\tictactoegame.h(236): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\tic_tac_mew\tic_tac_mew\tictactoegame.h(254): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\tic_tac_mew\tic_tac_mew\tictactoegame.h(261): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+e:\tic_tac_mew\tic_tac_mew\rungame.h(215): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+e:\tic_tac_mew\tic_tac_mew\rungame.h(222): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  main.cpp
+  StandardCursor.cpp
+  TextureManager.cpp
+  Создание кода
+e:\tic_tac_mew\tic_tac_mew\tictactoegame.h(214): warning C4715: TTTGame::makeMove: значение возвращается не при всех путях выполнения
+  All 309 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  Tic_Tac_Mew.vcxproj -> E:\Tic_Tac_Mew\Release\Tic_Tac_Mew.exe
