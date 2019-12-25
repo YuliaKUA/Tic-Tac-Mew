@@ -14,9 +14,9 @@ void runAnimation(RenderWindow & window, int who);
 using namespace sf;
 using namespace std;
 
-// функция для первой обучающей игры бота с ботом
+// function for the first learning game of a bot with a bot
 void simulationGame(TTTGame::Field &field, Player * player1, Player * player2) {
-	//текущий игрок 
+	// current player
 	Player * current = player1;
 
 	for (int i = 0; i < POSSIBLE_MOVES; i++)
@@ -50,15 +50,15 @@ void runGame(RenderWindow & window) {
 	window.draw(gameGrid);
 
 
-	SYSTEMTIME st; //системное время для рандома
+	SYSTEMTIME st; // system time for random
 	GetSystemTime(&st);
 	srand(st.wMilliseconds);
 
 	TTTGame::Field field;
 	TTTGame::init(field);
 
-	//создаем 2 игроков (бота и бота монте-карло) 
-	//устанавливаем для каждого фигуру - крестик 1 или нолик 2
+	// create 2 players (bots and monte carlo bots)
+	// set for each figure - a cross 1 or a zero 2
 	Player * player1 = new Bot();
 	player1->setFigure(TTT_CROSS);
 	Player * player2 = new MonteCarloBot();
@@ -66,10 +66,9 @@ void runGame(RenderWindow & window) {
 
 	simulationGame(field, player1, player2);
 
-	//текущий игрок 
 	Player * current;
 
-	player1 = new User(); // добавляем пользователя
+	player1 = new User(); 
 	player1->setFigure(TTT_CROSS);
 	current = player1;
 
@@ -110,7 +109,7 @@ void runGame(RenderWindow & window) {
 
 	window.display();
 
-	int whoWin = TTTGame::checkWin(field); //кто победил
+	int whoWin = TTTGame::checkWin(field); //who has won
 	if (whoWin == TTT_EMPTY) {
 		Sleep(500);
 	}
@@ -118,13 +117,13 @@ void runGame(RenderWindow & window) {
 		Sleep(1500);
 	}
 
-	// запуск анимации
+	// start animation
 	runAnimation(window, whoWin);
 
 }
 
-//функция запускает разную анимацию после завершения игры
-// в зависимости от того, кто победил
+// function starts a different animation after the game is completed
+// depending on who won
 void runAnimation(RenderWindow & window, int who) {
 	Texture herotexture, winTex,
 		retEnt;
@@ -136,13 +135,13 @@ void runAnimation(RenderWindow & window, int who) {
 
 	retEntSprite.setPosition(370, 660);
 
-	int colorR, colorG, colorB, // определение цвета для заливки экрана
-		frameX, frameY, //проход по картинке, по кадрам
-		numFrames, // кол-во кадров
-		height, width; //размер прямоугольника для выделения кадра
+	int colorR, colorG, colorB, // define the color to fill the screen
+		frameX, frameY, // pass through the picture, in frames
+		numFrames, // number of frames
+		height, width; // the size of the rectangle to select the frame
 
-	//в зависимости от того, кто выиграл, загружаем разные изображения для анимации
-	// + их индивидуальные настройки для вывода
+	// depending on who won, load different images for animation
+	// + their individual settings for output
 	if (who == TTT_CIRCLE) {
 		winTex.loadFromFile(WIN_CIRCLE_TEXT);
 		herotexture.loadFromFile(HERO_ANIMATION_WIN_CIRCLE);
@@ -206,7 +205,7 @@ void runAnimation(RenderWindow & window, int who) {
 		winTexSprite.setPosition(520, 580);
 	}
 
-	float CurrentFrame = 0; //хранит текущий кадр
+	float CurrentFrame = 0;
 	Clock clock;
 
 	while (!Keyboard::isKeyPressed(Keyboard::Enter)) {
@@ -216,15 +215,15 @@ void runAnimation(RenderWindow & window, int who) {
 		clock.restart();
 		time = time / 800;
 
-		//служит для прохождения по "кадрам". переменная доходит до (кол-ва кажров) 
-		//суммируя произведение времени и скорости 
-		//изменив 0.005 можно изменить скорость анимации
+		// serves to go through the "frames". the variable reaches (qazra)
+		// adding up the product of time and speed
+		// changing 0.005 you can change the animation speed
 		CurrentFrame += 0.005*time;
 
-		//проходимся по всем кадрам, если дошли до последнего - возвращаемся к первому
+		// go through all the frames, if we get to the last - go back to the first
 		if (CurrentFrame > numFrames) CurrentFrame -= numFrames;
 
-		//проходимся по координатам Х
+		// walk along the X coordinates
 		herosprite.setTextureRect(IntRect(frameX * int(CurrentFrame), frameY, height, width));
 
 		window.clear(Color(colorR, colorG, colorB));
