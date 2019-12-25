@@ -9,11 +9,11 @@ using namespace sf;
 
 void TextureManager::loadTexture(const string& name, const string& filename)
 {
-	//загружаем текстуру из файла
+	// load the texture from the file
 	Texture tex;
 	tex.loadFromFile(filename);
 
-	//Добавляем в массив с текстурами
+	// add to the array with textures
 	this->textures_[name] = tex;
 
 }
