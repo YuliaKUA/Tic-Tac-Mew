@@ -1,4 +1,3 @@
-// алгоритм
 #pragma once
 #ifndef PLAYER
 #define PLAYER
@@ -13,7 +12,7 @@ using namespace std;
 using namespace sf;
 
 //////////////////
-class Player //шаблон для пользователя и машины
+class Player // template for user and machine
 {
 public:
 	virtual void setFigure(int figure) = 0;
@@ -41,7 +40,7 @@ public:
 		this->xPiece_.loadFromFile(X_PIECE_FILEPATH);
 	}
 
-	void setFigure(int figure) { //крестик
+	void setFigure(int figure) { // cross
 		this->mFigure_ = figure;
 	}
 
@@ -59,7 +58,7 @@ public:
 
 		while (!TTTGame::makeMove(field, this->mFigure_, x, y))
 		{
-			//чтение координаты клетки поля, в зависимости от расположения курсора
+			// read the coordinates of the cell field, depending on the location of the cursor
 			if (IntRect(150, 75, 112, 112).contains(Mouse::getPosition(window))) {
 				cellNumber = 1;
 			}
@@ -148,7 +147,7 @@ public:
 
 			Event event;
 			window.pollEvent(event);
-			//если нажата левая клавиша мыши - рисуем фигуру
+			// if the left mouse button is pressed - draw a shape
 			if (event.type == Event::MouseButtonPressed)
 			{
 				if (cellNumber == 1) {
@@ -330,7 +329,7 @@ class Bot : public Player
 private:
 	int mFigure_;
 
-	//прервать победную линию
+	// break the winning line
 	bool interruptEnemy(TTTGame::Field & field)
 	{
 		int enemy;
@@ -339,7 +338,7 @@ private:
 		else
 			enemy = TTT_CIRCLE;
 
-		// по горизонтали
+		// horizontally
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[i][0] == enemy && field[i][1] == enemy && field[i][2] == enemy
@@ -371,7 +370,7 @@ private:
 			}
 		}
 
-		// по вертикали
+		// vertically
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[0][i] == enemy && field[1][i] == enemy && field[2][i] == enemy
@@ -406,7 +405,7 @@ private:
 			}
 		}
 
-		// по главной диагонали
+		// on the main diagonal
 		int diagonal1[TTT_FIELDSIZE];
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 			diagonal1[i] = field[i][i];
@@ -442,7 +441,7 @@ private:
 			return true;
 		}
 
-		// по побочной диагонали
+		// on the side diagonal
 		int diagonal2[TTT_FIELDSIZE] = { field[0][4], field[1][3], field[2][2], field[3][1], field[4][0] };
 
 		if (diagonal2[0] == enemy && diagonal2[1] == enemy && diagonal2[2] == enemy
@@ -479,7 +478,7 @@ private:
 		return false;
 	}
 
-	//сделать рандомный ход
+	// make a random move
 	void makeRandomMove(TTTGame::Field & field)
 	{
 		int x = -1, y = -1;
