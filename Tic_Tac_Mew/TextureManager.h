@@ -12,21 +12,17 @@ class TextureManager
 {
 private:
 
-	//массив используемых текстур
+	// array of textures used
 	map <string, Texture> textures_;
 
 public:
 
-	//Добавить текстуру из файла
+	// load texture from file
 	void loadTexture(const string& name, const string &filename);
 
-	//Вызов текстуры
 	Texture& getRef(const string& texture);
 
-	//Конструктор
 	TextureManager() { }
-
-	//Деструктор
 	~TextureManager() { }
 };
 
