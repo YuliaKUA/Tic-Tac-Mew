@@ -1,4 +1,3 @@
-// алгоритм
 #pragma once
 #ifndef TICTACTOE_GAME
 #define TICTACTOE_GAME
@@ -11,10 +10,9 @@ using namespace sf;
 
 namespace TTTGame
 {
-	//создаем новый тип - поле размером 5х5
 	typedef int Field[TTT_FIELDSIZE][TTT_FIELDSIZE];
 
-	//заполняем все клеточки 0
+	// fill all cells 0
 	void init(Field & field)
 	{
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
@@ -23,7 +21,7 @@ namespace TTTGame
 	}
 
 	//!!!!!!!!!
-	//функция печати поля
+	// field print function
 	/*void print(Field & field)
 	{
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
@@ -42,8 +40,8 @@ namespace TTTGame
 		}
 	}*/
 
-	// сделать ход, присвоить полю 1 или 2
-	// проверяет можем ли мы сделать ход
+	// make a move, assign field 1 or 2
+	// checks if we can make a move
 	bool makeMove(Field & field, int who, int wherex, int wherey) {
 		if (wherex < 0 || wherex >= TTT_FIELDSIZE)
 			return false;
@@ -58,7 +56,7 @@ namespace TTTGame
 	}
 
 
-	//для монтекарло
+	// for montecarlo
 	bool makeMove(Field & field, int who, int wherex, int wherey, RenderWindow & window, Texture tex)
 	{
 
@@ -72,7 +70,7 @@ namespace TTTGame
 
 		field[wherey][wherex] = who;
 
-		// рисуем нолик в зависимости от координат
+		// draw a toe depending on the coordinates
 		if (who == TTT_CIRCLE) {
 			Sprite oSprite(tex);
 
@@ -213,10 +211,10 @@ namespace TTTGame
 		}
 	}
 
-	// проверка на победу
+	// check for victory
 	int checkWin(Field & field, RenderWindow & window)
 	{
-		//по вертикали
+		//vertically
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[0][i] == field[1][i] && field[1][i] == field[2][i] && field[1][i] != TTT_EMPTY
@@ -241,7 +239,7 @@ namespace TTTGame
 			}
 		}
 
-		//по горизонтали
+		//horizontally
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[i][0] == field[i][1] && field[i][1] == field[i][2] && field[i][1] != TTT_EMPTY
@@ -266,7 +264,7 @@ namespace TTTGame
 			}
 		}
 
-		//по диагоналям
+		// diagonally
 		if (field[0][0] == field[1][1] && field[1][1] == field[2][2] && field[2][2] != TTT_EMPTY
 			&& field[2][2] == field[3][3] && field[3][3] == field[4][4]) {
 			if (field[2][2] == 2) {
@@ -306,13 +304,13 @@ namespace TTTGame
 			return field[2][2];
 		}
 
-		//нет комбинации выигрышной
+		// no winning combination
 		return TTT_EMPTY;
 	}
 
 	int checkWin(Field & field)
 	{
-		//по вертикали
+		//vertically
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[0][i] == field[1][i] && field[1][i] == field[2][i] && field[1][i] != TTT_EMPTY
@@ -320,7 +318,7 @@ namespace TTTGame
 				return field[2][i];
 		}
 
-		//по горизонтали
+		//horizontally
 		for (int i = 0; i < TTT_FIELDSIZE; i++)
 		{
 			if (field[i][0] == field[i][1] && field[i][1] == field[i][2] && field[i][1] != TTT_EMPTY
@@ -329,7 +327,7 @@ namespace TTTGame
 
 		}
 
-		//по диагоналям
+		// diagonally
 		if (field[0][0] == field[1][1] && field[1][1] == field[2][2] && field[2][2] != TTT_EMPTY
 			&& field[2][2] == field[3][3] && field[3][3] == field[4][4])
 			return field[2][2];
@@ -339,11 +337,11 @@ namespace TTTGame
 			&& field[2][2] == field[3][1] && field[3][1] == field[0][4])
 			return field[2][2];
 
-		//нет комбинации выигрышной
+		// no winning combination
 		return TTT_EMPTY;
 	}
 
-	//проверка можно ли сделать ход
+	// check if you can make a move
 	bool isPlayable(Field & field, RenderWindow & window)
 	{
 		if (checkWin(field, window)) {
