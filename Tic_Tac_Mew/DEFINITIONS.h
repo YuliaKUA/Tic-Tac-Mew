@@ -1,13 +1,13 @@
 #pragma once
 
-#define TTT_EMPTY 0 //пустая клеточка
-#define TTT_CROSS 1 //клеточка занята игроком
-#define TTT_CIRCLE 2 //клеточка занята ботом
+#define TTT_EMPTY 0 // empty cell
+#define TTT_CROSS 1 // cell is occupied by the player
+#define TTT_CIRCLE 2 // the cell is busy with the bot
 
-#define TTT_FIELDSIZE 5 //размер поля
-#define POSSIBLE_MOVES 25 //количество возможных ходов
+#define TTT_FIELDSIZE 5 // field size
+#define POSSIBLE_MOVES 25 // number of possible moves
 
-//размер экрана
+//Screen size
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 750
 
