@@ -16,24 +16,22 @@ void Game::loadTextures() {
 }
 
 Game::Game() {
-	//загружаем необходимые текстуры
+	//load the necessary textures
 	this->loadTextures();
 
-	//создаем окно приложения
+	//create an application window
 	this->window_.create(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Tic Tac Mew", Style::None);
 
-	//устанавливаем значок
+	//set icon
 	Image icon;
 	icon.loadFromFile(ICON);
 	window_.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	//частота кадров
+	//frame frequency
 	this->window_.setFramerateLimit(60);
 }
 
-//Деструктор
 Game::~Game() { }
-
 
 void Game::menu() {
 
@@ -41,14 +39,14 @@ void Game::menu() {
 		menuBackground, mainBackground, grid, xPiece,
 		retEsc;
 
-	menuTexture1 = texmgr_.getRef("new game headline"); //надпись "новая игра"
-	menuTexture2 = texmgr_.getRef("info headline"); //надпись "об игре"
-	menuTexture3 = texmgr_.getRef("exit headline"); //надпись "выход"
-	aboutTexture = texmgr_.getRef("about"); // текст "об игре.."
-	menuBackground = texmgr_.getRef("catBackground"); //фон главного меню
-	mainBackground = texmgr_.getRef("background"); //основной фон игры
-	grid = texmgr_.getRef("grid"); // клеточки
-	retEsc = texmgr_.getRef("return esc"); //надпись вернуться в меню esc
+	menuTexture1 = texmgr_.getRef("new game headline"); //inscription "new game"
+	menuTexture2 = texmgr_.getRef("info headline"); //inscription "about game"
+	menuTexture3 = texmgr_.getRef("exit headline"); //inscription "exit"
+	aboutTexture = texmgr_.getRef("about"); //text about
+	menuBackground = texmgr_.getRef("catBackground"); //main menu background
+	mainBackground = texmgr_.getRef("background"); //main background of game
+	grid = texmgr_.getRef("grid"); //cells
+	retEsc = texmgr_.getRef("return esc"); //inscription esc
 
 
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3),
@@ -71,7 +69,7 @@ void Game::menu() {
 		menuNum = 0;
 		window_.clear(Color(129, 181, 221));
 
-		//если курсор попадает на кнопки, они менят цвет
+		// if the cursor falls on the buttons, they change color
 		if (IntRect(150, 200, 300, 50).contains(Mouse::getPosition(window_))) {
 			menu1.setColor(Color::Magenta);
 			menuNum = 1;
@@ -85,30 +83,30 @@ void Game::menu() {
 			menuNum = 3;
 		}
 
-		//если была нажата левая кнопка мыши
+		//if the left mouse button was pressed
 		Event eventM;
 		window_.pollEvent(eventM);
 		if (eventM.type == Event::MouseButtonPressed)
 			//if (Mouse::isButtonPressed(Mouse::Left))
 		{
 			if (menuNum == 1) {
-				//рисуем фон для игры и клеточки
+				//draw a background for the game and cells
 				window_.draw(mainBg);
 				gameGrid.setPosition(150, 75);
 				window_.draw(gameGrid);
 				window_.display();
 
-				//меняем на обычный курсор
+				//change to a regular cursor
 				window_.setMouseCursorVisible(true);
 				StandardCursor Cursor(sf::StandardCursor::HAND);
 				Cursor.set(window_.getSystemHandle());
 
-				//запускаем алгоритм игры
+				// run the game algorithm
 				runGame(window_);
 
 			}
 			if (menuNum == 2) {
-				//рисуем фон и текст с информацией пока не нажата клавиша esc
+				// draw a background and text with information until the esc key is pressed
 				window_.draw(mainBg);
 
 				about.setPosition(150, 75);
@@ -122,7 +120,7 @@ void Game::menu() {
 				while (!Keyboard::isKeyPressed(Keyboard::Escape));
 			}
 			if (menuNum == 3) {
-				//закрываем окно
+				//close the window
 				window_.close();
 				isMenu = false;
 			}
@@ -135,11 +133,11 @@ void Game::menu() {
 		window_.draw(menu3);
 
 
-		//прячем курсор
+		// hide the cursor
 		window_.setMouseCursorVisible(false);
-		View fixed = window_.getView(); // создаем фиксированный вид
+		View fixed = window_.getView(); // create a fixed view
 
-		// загружаем изображение курсора и создаем спрайт
+		// Р·Р°РіСЂСѓР¶Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РєСѓСЂСЃРѕСЂР° Рё СЃРѕР·РґР°РµРј СЃРїСЂР°Р№С‚
 		Texture cursor;
 		cursor.loadFromFile(CURSOR);
 		Sprite cursorSprite(cursor);
