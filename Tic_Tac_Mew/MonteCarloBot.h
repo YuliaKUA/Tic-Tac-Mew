@@ -1,4 +1,4 @@
-// алгоритм
+// algorithm
 #pragma once
 #ifndef MONTECARLOBOT
 #define MONTECARLOBOT
@@ -20,7 +20,7 @@ typedef struct MCBTreeNode
 	int moveY_ = -1;
 
 	int wins_ = 0;
-	int attempts_ = 0; //попытки
+	int attempts_ = 0; // attempts
 
 	MCBTreeNode * parent_ = nullptr;
 	vector <MCBTreeNode *>  nodes_;
@@ -35,10 +35,10 @@ class MonteCarloBot : public Player
 private:
 	int mFigure_;
 
-	//Состояние поля на предыдущем шаге
+	// The state of the field in the previous step
 	TTTGame::Field mPreviousStep_;
 
-	//Поиск следующего шага
+	// Search for the next step
 	void  findNewStep(TTTGame::Field & field, int & someX, int & someY)
 	{
 		for (int y = 0; y < TTT_FIELDSIZE; y++)
@@ -53,37 +53,36 @@ private:
 				this->mPreviousStep_[y][x] = field[y][x];
 	}
 
-	MCBTreeNode * mTree_; //дерево монте-карло отыгранное
-	MCBTreeNode * mCurrent_; //дерево текущего состояния
+	MCBTreeNode * mTree_; // Monte Carlo tree won back
+	MCBTreeNode * mCurrent_; // current state tree
 
 public:
-	//Конструктор
 	MonteCarloBot()
 	{
-		this->mFigure_ = 0; //крестик или нолик
+		this->mFigure_ = 0; // cross or zero
 		this->mTree_ = new MCBTreeNode;
 		this->mCurrent_ = this->mTree_;
 		TTTGame::init(this->mPreviousStep_);
 	}
 
-	void setFigure(int figure) { //установить 1 или 2
+	void setFigure(int figure) { // set to 1 or 2
 		this->mFigure_ = figure;
 	}
 
-	int getFigure() { // вернуть фигуру игрока
+	int getFigure() { // return the playerвЂ™s piece
 		return this->mFigure_;
 	}
 
 	void makeMove(TTTGame::Field & field) { }
 
-	void makeMove(TTTGame::Field & someField, RenderWindow & window) { //сделать ход
+	void makeMove(TTTGame::Field & someField, RenderWindow & window) { // make a move
 
-		//добавить узел с новым ходом
-		//алгоритм выбирает ход своего противника. 
-		//Если такой ход существует — мы его выберем, если нет — добавим
+		// add a node with a new move
+		// the algorithm chooses the move of its opponent
+		// If such a move exists - we will choose it, if not - add
 		bool exist = false;
 
-		int enemyX = -1, enemyY = -1; //координаты врага
+		int enemyX = -1, enemyY = -1; // enemy coordinates
 		this->findNewStep(someField, enemyX, enemyY);
 
 		for (MCBTreeNode * node : this->mCurrent_->nodes_)
@@ -106,7 +105,7 @@ public:
 			this->mCurrent_ = enemymove;
 		}
 
-		// 1. выбрать узел с наибольшим количеством побед
+		// 1. select the node with the most wins
 		MCBTreeNode * bestnode = this->mCurrent_;
 		for (MCBTreeNode * node : this->mCurrent_->nodes_)
 		{
@@ -114,17 +113,17 @@ public:
 				bestnode = node;
 		}
 
-		// 2. расширение - создать новый узел
-		//К выбранному узлу с ходом противника мы добавим узел 
-		//со своим ходом и с нулевыми результатами
+		// 2. extension - create a new node
+		// To the selected node with the opponentвЂ™s move, we will add a node
+		// with its own progress and with zero results
 		MCBTreeNode * newnode = new MCBTreeNode;
 		newnode->parent_ = bestnode;
 		newnode->player_ = this->mFigure_;
 		this->mCurrent_->nodes_.push_back(newnode);
 
-		// 3. симуляция игры
-		//Отыграем партию от текущего состояния игрового поля до чей-либо победы. 
-		//Отсюда мы возьмём только первый ход (т.е. свой ход) и результаты
+		// 3. game simulation
+		// Play the game from the current state of the playing field to someone else's victory.
+		// From here we will take only the first move (i.e. our move) and the results
 		TTTGame::Field field;
 		for (int y = 0; y < TTT_FIELDSIZE; y++)
 			for (int x = 0; x < TTT_FIELDSIZE; x++)
@@ -150,10 +149,10 @@ public:
 				current = bot1;
 		}
 
-		// 4. Результаты из симуляции мы будем распространять от текущего до корня. 
-		//Ко всем родительским узлам мы добавим единицу в количество сыгранных партий, 
-		//а если мы наткнёмся на узел победителя — то в такой узел мы добавим единицу 
-		//в количество выигранных партий.
+		// 4. Results from the simulation we will distribute from the current to the root.
+		// To all parent nodes we add one to the number of games played,
+		// and if we stumble upon a winnerвЂ™s node, we will add a unit to such a node
+		// in the number of games won.
 
 		int winner = TTTGame::checkWin(field);
 
@@ -171,13 +170,11 @@ public:
 			currentnode = currentnode->parent_;
 		}
 
-		//проверяем можем ли мы сделать ход
+		// check if we can make a move
 		this->mCurrent_ = newnode;
 		TTTGame::makeMove(someField, this->mFigure_, mCurrent_->moveX_, mCurrent_->moveY_, window, oPiece);
 	}
 
-
-	// сброс
 	void reset() {
 		this->mCurrent_ = this->mTree_;
 		TTTGame::init(this->mPreviousStep_);
