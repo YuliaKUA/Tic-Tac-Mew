@@ -1,4 +1,4 @@
-# Tic-Tac-Mew
+#                                             Tic-Tac-Mew
 Coursework in the discipline of algorithms and data structures. 
 
 The work implements an algorithm for finding the optimal move in a tic-tac-toe game with a 5 × 5 field - the Monte Carlo algorithm. 
